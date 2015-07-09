@@ -1,14 +1,8 @@
-import functools
-from string import ascii_lowercase
+from string import ascii_lowercase, maketrans, translate
 
-table = dict(zip(ascii_lowercase, ascii_lowercase[::-1]))
-
-def char_trans(c):
-    if c.lower() in table:
-        return table[c.lower()]
-    return c
+table = maketrans(ascii_lowercase, ascii_lowercase[::-1])
 
 def encode(clear):
-    return ''.join(char_trans(c) for c in clear)
+    return translate(clear.lower(), table)
 
-decode = encode
+decode = encode  # This cipher is symmetrical
