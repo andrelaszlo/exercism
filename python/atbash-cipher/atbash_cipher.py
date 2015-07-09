@@ -6,16 +6,17 @@ import re
 # Would be in a separate module, but exercism doesn't support submitting
 # multiple files (yet!)
 
-_pattern = re.compile(r'[^a-z1-9]')
+_BLOCK_SIZE = 5
+_PATTERN = re.compile(r'[^a-z1-9]')
+_TRANS = maketrans(ascii_lowercase, ascii_lowercase[::-1])
 
-_trans = maketrans(ascii_lowercase, ascii_lowercase[::-1])
-
-def _atbash(input, group=False):
-    raw = translate(_pattern.sub('', input.lower()), _trans)
+def _atbash(txt, group=False):
+    raw = translate(_PATTERN.sub('', txt.lower()), _TRANS)
     if not group:
-        return raw, len(raw)
-    grouped = [raw[i:i+5] for i in range(0, len(raw), 5)]
-    return ' '.join(grouped), len(input)
+        return raw, len(txt)
+    grouped = [raw[i:i + _BLOCK_SIZE]
+               for i in range(0, len(raw), _BLOCK_SIZE)]
+    return ' '.join(grouped), len(txt)
 
 def _search(name):
     if name == 'atbash':
