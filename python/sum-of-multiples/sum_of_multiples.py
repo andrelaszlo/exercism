@@ -1,4 +1,2 @@
-def sum_of_multiples(n, factors=[3, 5]):
-    return sum(reduce(set.union,
-                      [set(range(m, n, m)) if m != 0 else set()
-                       for m in factors]))
+def sum_of_multiples(n, f=[3, 5]):
+    return sum(set(reduce(lambda a,m: a+m, (range(m,n,m) for m in f if m), [])))
